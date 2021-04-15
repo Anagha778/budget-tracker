@@ -11,10 +11,10 @@ const app = express();
 app.use(logger("dev"));
 
 app.use(compression());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -24,6 +24,7 @@ mongoose.connect(MONGODB_URI, {
 
 // routes
 app.use(require("./routes/api.js"));
+require('./routes/htmlroutes')(app);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
