@@ -52,7 +52,8 @@ self.addEventListener('activate', function (evt) {
 
 // Intercept fetch requests
 self.addEventListener('fetch', function(evt) {
-    if (evt.request.url.includes('/api/')) {
+    if (evt.request.url.includes('/api/transaction')) {
+      console.log("[Service Worker] Fetch (data)", evt.request.url);
         evt.respondWith(
           caches
             .open(DATA_CACHE_NAME)

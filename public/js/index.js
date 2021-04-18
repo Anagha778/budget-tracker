@@ -12,6 +12,9 @@ fetch("/api/transaction")
     populateTotal();
     populateTable();
     populateChart();
+  })
+  .catch(err => {
+    console.log(err);
   });
 
 function populateTotal() {
@@ -41,6 +44,7 @@ function populateTable() {
 }
 
 function populateChart() {
+ 
   // copy array and reverse it
   let reversed = transactions.slice().reverse();
   let sum = 0;
@@ -60,8 +64,8 @@ function populateChart() {
   // remove old chart if it exists
   if (myChart) {
     myChart.destroy();
-  }
-
+  
+}
   let ctx = document.getElementById("myChart").getContext("2d");
 
   myChart = new Chart(ctx, {
@@ -79,6 +83,7 @@ function populateChart() {
 }
 
 function sendTransaction(isAdding) {
+  
   let nameEl = document.querySelector("#t-name");
   let amountEl = document.querySelector("#t-amount");
   let errorEl = document.querySelector(".form .error");
@@ -112,6 +117,7 @@ function sendTransaction(isAdding) {
   populateTable();
   populateTotal();
   
+  
   // also send to server
   fetch("/api/transaction", {
     method: "POST",
@@ -121,14 +127,15 @@ function sendTransaction(isAdding) {
       "Content-Type": "application/json"
     }
   })
-  .then(response => {    
+  .then(response => {       
     return response.json();
   })
   .then(data => {
     if (data.errors) {
       errorEl.textContent = "Missing Information";
     }
-    else {
+  
+    else {     
       // clear form
       nameEl.value = "";
       amountEl.value = "";
